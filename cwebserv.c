@@ -11,7 +11,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <time.h>
-#include "picross.h"
+#include "cwebserv.h"
 
 struct chrbuf {
 	//the buffer for incoming socket data, and associated info

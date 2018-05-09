@@ -21,10 +21,13 @@ void cwebserv(char *port,
 ```
 example:
 ```
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include "cwebserv.h"
 
 char *makeoutput(char *query, char *path, int *final_length) {
-    char *template = "<!DOCTYPE html>\n"
+    char template[] = "<!DOCTYPE html>\n"
         "<html>\n"
         "<head>\n"
         "<meta charset=\"utf-8\">\n"
@@ -35,17 +38,20 @@ char *makeoutput(char *query, char *path, int *final_length) {
         "<p>Your HTTP query was \"%s\".</p>\n"
         "</body>\n"
         "</html>\n";
-    int length = sizeof(template) + strlen(query) + strlen(path);
+    int maxlen = sizeof(template) + strlen(query) + strlen(path);
     char *ret = malloc(maxlen);
-    /*final_length needs to be set to the length of the returned string, not
-        including the final null terminator, which can sometimes be accomplisted
-        using strlen.*/
-    final_length = snprintf(ret, maxlen, template, path, query);
+    /**final_length needs to be set to the length of the returned string, not
+      including the final null terminator, which can sometimes be accomplished
+      using strlen.*/
+    *final_length = snprintf(ret, maxlen, template, path, query);
     return ret;
 }
 
-int main() {
-    cwebserv("8080" /*or whatever port it will run on*/, generate);
+int main(int argc, char **argv) {
+    /*Start a server on the port specified as the only argument, or if there
+      is no argument, use "8080".*/
+    cwebserv(argc > 1 ? argv[1] : "8080" /*or whatever port it will run on*/,
+            makeoutput);
 }
 ```
 You also get these definitions, which might be useful, but probably won't be:

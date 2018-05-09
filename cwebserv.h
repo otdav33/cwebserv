@@ -1,4 +1,3 @@
-#include <time.h>
 #define BACKLOG 5
 #define BUFSTEP 1000 //buffer allocation increment
 #define BUFSTART 5000 //initial buffer allocation
@@ -11,16 +10,3 @@ void cwebserv(char *port,
         char *(*makeoutput)(char *query, char *path, int *final_length));
 /*Start the web server on port *port. Run the function makeoutput for each
   request.*/
-
-struct chrbuf {
-	//the buffer for incoming socket data, and associated info
-	char *buf;
-	char *buf_to_send;
-	int bsize;
-	int buflen;
-	int sentbytes;
-	int started_sending; //0 for no, 1 for yes
-	int finished_sending; //0 for no, 1 for yes, 2 to close the connection
-        int keepalive;
-        time_t last_accessed;
-};

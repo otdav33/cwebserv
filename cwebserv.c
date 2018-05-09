@@ -13,6 +13,19 @@
 #include <time.h>
 #include "picross.h"
 
+struct chrbuf {
+	//the buffer for incoming socket data, and associated info
+	char *buf;
+	char *buf_to_send;
+	int bsize;
+	int buflen;
+	int sentbytes;
+	int started_sending; //0 for no, 1 for yes
+	int finished_sending; //0 for no, 1 for yes, 2 to close the connection
+        int keepalive;
+        time_t last_accessed;
+};
+
 int addfd(struct pollfd *fds, struct chrbuf *bufs, nfds_t *nfds,
         nfds_t *maxfds, int fd, short events) {
     //add the fd to the list of fds. events is the events that poll will be

@@ -3,7 +3,7 @@ This is a library for making web servers in C.
 Features:
 * HTTP/1.0 support
 * HTTP/1.1 support
-* privilage dropping
+* privilege dropping
 * timeouts
 
 Shortcomings:
